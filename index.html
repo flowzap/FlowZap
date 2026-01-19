@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>FlowZap | Sites e Automações</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-main:#0f172a;
+      --bg-soft:#020617;
+      --accent:#0ea5e9;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --border:#1e293b;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:'Inter',sans-serif;
+      background:var(--bg-main);
+      color:var(--text);
+      scroll-behavior:smooth;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    /* NAV */
+    nav{
+      position:fixed;
+      top:0;
+      width:100%;
+      background:rgba(2,6,23,.96);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--border);
+      z-index:1000;
+    }
+
+    .nav-container{
+      max-width:1140px;
+      margin:auto;
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .logo{
+  display:flex;
+  align-items:center;
+}
+
+.logo img{
+  height:34px;
+  width:auto;
+}
+
+
+    .menu{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .menu a{
+      color:var(--muted);
+      font-size:.9rem;
+      white-space:nowrap;
+    }
+
+    .menu a:hover{color:var(--accent)}
+
+    .menu .cta{
+      padding:7px 12px;
+      border-radius:6px;
+      background:var(--accent);
+      color:#020617;
+      font-weight:600;
+    }
+
+    .container{max-width:1140px;margin:auto;padding:0 20px}
+
+    /* HERO */
+    header{
+      padding:140px 0 80px;
+      background:linear-gradient(180deg,#020617,#0f172a);
+      border-bottom:1px solid var(--border);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:40px;
+      align-items:center;
+    }
+
+    .hero h1{
+      font-size:2.4rem;
+      max-width:520px;
+      margin:0 0 14px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      max-width:520px;
+    }
+
+    .actions{
+      margin-top:28px;
+      display:flex;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    .btn {
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+  color: #020617;
+  box-shadow: 0 8px 20px rgba(14,165,233,0.3);
+}
+
+.btn.primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(14,165,233,0.4);
+}
+
+.btn.outline {
+  border: 2px solid #0ea5e9;
+  color: #0ea5e9;
+}
+
+.btn.outline:hover {
+  background: #0ea5e9;
+  color: #020617;
+  transform: translateY(-4px);
+}
+
+    /* O "quadrado" que segura o vídeo */
+    .video-box {
+      width: 100%;
+      max-width: 280px; /* Isso impede que ele fique gigante no celular */
+      margin: 20px auto; /* Centraliza o vídeo */
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Dá um efeito de sombra bonito */
+    }
+
+/* PORTFOLIO CARD */
+.portfolio-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  padding: 0;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.portfolio-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.portfolio-card .card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  padding: 12px 15px;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+}
+
+.portfolio-card:hover img {
+  transform: scale(1.05);
+}
+
+.portfolio-card:hover .card-info {
+  background: rgba(14,165,233,0.8); /* destaque azul ao passar o mouse */
+}
+
+/* MOBILE RESPONSIVE */
+@media(max-width:520px){
+  .portfolio-card img {
+    height: 160px;
+  }
+
+  .card-info h3 {
+    font-size: 1rem;
+  }
+
+  .card-info p {
+    font-size: 0.85rem;
+  }
+}
+
+/* HERO ANIMATION */
+.hero > div {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.hero.active > div {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* VIDEO FLOAT EFFECT */
+.video-box {
+  animation: float 3s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-10px); }
+}
+
+
+    /* O vídeo em si */
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 9 / 16; /* Força o formato de 'Stories/TikTok' */
+      object-fit: cover;
+    }
+
+    /* Ajuste para quando o site for aberto no computador */
+    @media(min-width: 901px) {
+      .video-box {
+        max-width: 320px; 
+        margin-left: auto; /* Joga o vídeo para a direita no PC */
+      }
+    }
+
+.video-box{
+  animation:floatIn .9s ease forwards;
+  opacity:0;
+}
+
+@keyframes floatIn{
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+
+.whatsapp{
+  animation:pulse 2.5s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}
+  70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}
+  100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}
+}
+
+
+
+    /* SECTIONS */
+    section{
+      padding:80px 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    h2{
+      text-align:center;
+      font-size:1.9rem;
+      margin-bottom:10px;
+    }
+
+    .desc{
+      text-align:center;
+      color:var(--muted);
+      max-width:620px;
+      margin:0 auto 45px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:24px;
+    }
+
+  .card{
+  background:var(--bg-soft);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:28px;
+  transition:transform .4s ease, box-shadow .4s ease, border-color .4s ease;
+}
+
+.card:hover{
+  transform:translateY(-8px) scale(1.01);
+  box-shadow:0 20px 40px rgba(0,0,0,.35);
+  border-color:var(--accent);
+}
+
+    .card p{color:var(--muted)}
+
+    /* TESTIMONIAL */
+    .testimonial{font-style:italic}
+
+    .testimonial span{
+      display:block;
+      margin-top:14px;
+      font-style:normal;
+      font-weight:600;
+      color:var(--accent);
+    }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp{
+      position:fixed;
+      bottom:22px;
+      right:22px;
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      background:#25d366;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:999;
+      box-shadow:0 10px 25px rgba(0,0,0,.4);
+    }
+
+    .whatsapp svg{
+      width:28px;
+      height:28px;
+      fill:#020617;
+    }
+
+    /* SCROLL ANIMATION */
+    .reveal{
+  opacity:0;
+  transform:translateY(50px);
+  transition:opacity .8s ease, transform .8s ease;
+  will-change:opacity, transform;
+}
+
+
+    .reveal.active{
+      opacity:1;
+      transform:none;
+    }
+
+    footer{
+      padding:30px;
+      text-align:center;
+      color:var(--muted);
+      background:#020617;
+    }
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}
+      iframe{height:220px}
+      .menu a{font-size:.85rem}
+    }
+
+    @media(max-width:520px){
+      .menu{
+        gap:10px;
+      }
+      .menu .cta{
+        padding:6px 10px;
+        font-size:.85rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo">
+  <div class="logo">
+  <img src="assets/logo.png" alt=" FlowZap">
+</div>
+
+    <div class="menu">
+      <a href="#servicos">Serviços</a>
+      <a href="#processo">Processo</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="#contato" class="cta">Contato</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="container hero reveal">
+    <div>
+      <h1>🚀 Transforme visitantes em clientes automáticos pelo WhatsApp 💬</h1>
+      <p>Sites profissionais e automações inteligentes que aumentam vendas, organizam seu atendimento e passam confiança aos clientes ✨</p>
+             <div class="actions">
+  <a href="#contato" class="btn primary">💬 Solicitar proposta</a>
+  <a href="#portfolio" class="btn outline">📂 Ver portfólio</a>
+</div>
+    </div>
+
+    <div class="video-box">
+      <video controls playsinline preload="metadata">
+        <source src="assets/video.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    </div>
+  </div>
+</header>
+
+<section id="servicos">
+  <div class="container reveal">
+    <h2>Serviços</h2>
+    <p class="desc">Soluções digitais focadas em clareza, confiança e resultado.</p>
+    <div class="grid">
+      <div class="card"><h3>💻 Sites Institucionais</h3><p>Crie uma presença digital sólida com sites modernos e responsivos que passam confiança e profissionalismo aos seus clientes.</p></div>
+<div class="card"><h3>📋 Catálogos Digitais</h3><p>Apresente seus produtos de forma interativa e direta, com acesso rápido ao WhatsApp para vendas instantâneas.</p></div>
+<div class="card"><h3>🤖 Automação de Atendimento</h3><p>Automatize o atendimento 24h, organize mensagens e nunca perca uma oportunidade de venda.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="processo">
+  <div class="container reveal">
+    <h2>Como funciona</h2>
+    <p class="desc">Processo simples e transparente.</p>
+    <div class="grid">
+      <div class="card"><h3>🔍 Diagnóstico</h3><p>Entendemos seu negócio, público-alvo e objetivos para criar a melhor estratégia digital.</p></div>
+<div class="card"><h3>⚙️ Desenvolvimento</h3><p>Transformamos ideias em sites e automações eficientes, pensados para conversão.</p></div>
+<div class="card"><h3>✅ Entrega e Ajustes</h3><p>Entregamos a solução final com testes completos e ajustes finais para máxima performance.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="container reveal">
+    <h2>Portfólio</h2>
+    <p class="desc">Projetos demonstrativos.</p>
+    <div class="grid">
+
+      <!-- Card Restaurante -->
+      <a href="https://flowzap.github.io/Restaurante/" target="_blank" class="card-link">
+        <div class="card">
+          <img src="assets/restaurante.jpg" alt="Projeto Restaurante" style="width:100%; border-radius:12px; margin-bottom:12px;">
+          <h3>Restaurante</h3>
+          <p>Cardápio digital e pedidos online.</p>
+        </div>
+      </a>
+
+      <!-- Card Barbearia -->
+      <a href="https://flowzap.github.io/Barbearia" target="_blank" class="card-link">
+        <div class="card">
+          <img src="assets/barbearia.jpg" alt="Projeto Barbearia" style="width:100%; border-radius:12px; margin-bottom:12px;">
+          <h3>Barbearia</h3>
+          <p>Site para agendamentos.</p>
+        </div>
+      </a>
+
+      <!-- Card AutoPeças -->
+      <a href="https://flowzap.github.io/AutoPe-as/" target="_blank" class="card-link">
+        <div class="card">
+          <img src="assets/autpecas.jpg" alt="Projeto AutoPeças" style="width:100%; border-radius:12px; margin-bottom:12px;">
+          <h3>AutoPeças</h3>
+          <p>Venda de peças automotivas.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section id="avaliacoes">
+  <div class="container reveal">
+    <h2>Avaliações</h2>
+    <p class="desc">O que dizem os clientes.</p>
+    <div class="grid">
+     <div class="card testimonial">“Nosso site transformou a imagem da barbearia e aumentou a confiança dos clientes.”<span>João Silva • Barbearia</span></div>
+<div class="card testimonial">“A automação permitiu organizar todas as mensagens e agilizar vendas no WhatsApp.”<span>Maria Oliveira • Restaurante</span></div>
+<div class="card testimonial">“O contato ficou mais rápido e confiável, gerando mais oportunidades de negócio.”<span>Carlos Mendes • Comércio</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="container reveal" style="text-align:center">
+    <h2>Contato</h2>
+    <p class="desc">Entre em contato e comece a transformar seu negócio hoje mesmo 🚀</p>
+    <a href="https://wa.me/+5563999607019" target="_blank" class="btn primary">Peça seu Site Agora 💻</a>
+  </div>
+
+</section>
+
+<a class="whatsapp" href="https://wa.me/+5563999607019" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32">
+    <path d="M16 2.9C8.8 2.9 3 8.5 3 15.4c0 2.7.9 5.3 2.6 7.4L4 29.1l6.6-1.7c1.9 1 4 1.6 6.4 1.6 7.2 0 13-5.6 13-12.6S23.2 2.9 16 2.9z"/>
+  </svg>
+</a>
+
+<script>
+  const elements=document.querySelectorAll('.reveal');
+  const reveal=()=>elements.forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight-100){
+      el.classList.add('active');
+    }
+  });
+  window.addEventListener('scroll',reveal);
+  reveal();
+// HERO ANIMATION
+window.addEventListener('load', () => {
+  document.querySelector('.hero').classList.add('active');
+});
+
+</script>
+
+<footer>
+  © 2026 • FlowZap • Sites e Automações para Pequenos Negócios • Todos Os Direitos Reservados
+</footer>
+
+</body>
+</html>
