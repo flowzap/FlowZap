@@ -1010,29 +1010,31 @@ body::before{
     </p>
 
     <form
-      id="contactForm"
-      class="contact-form"
-    >
-      <input type="hidden" name="_subject" value="📩 Novo contato pelo site FlowZap">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
+  id="contactForm"
+  class="contact-form"
+  action="https://formsubmit.co/flowzapbusiness@gmail.com"
+  method="POST"
+>
+  <!-- Anti-bot (captcha falso) -->
+  <input type="hidden" name="_captcha" value="false">
 
-      <div class="form-group">
-        <input type="text" name="nome" placeholder="Seu nome" required>
-      </div>
+  <div class="form-group">
+    <input type="text" name="nome" placeholder="Seu nome" required>
+  </div>
 
-      <div class="form-group">
-        <input type="email" name="email" placeholder="Seu e-mail" required>
-      </div>
+  <div class="form-group">
+    <input type="email" name="email" placeholder="Seu e-mail" required>
+  </div>
 
-      <div class="form-group">
-        <textarea name="mensagem" placeholder="Conte um pouco sobre o seu projeto..." required></textarea>
-      </div>
+  <div class="form-group">
+    <textarea name="mensagem" placeholder="Conte um pouco sobre o seu projeto..." required></textarea>
+  </div>
 
-      <button type="submit" class="btn primary">
-        📩 Enviar mensagem
-      </button>
-    </form>
+  <button type="submit" class="btn primary">
+    📩 Enviar mensagem
+  </button>
+</form>
+
 
     <!-- Mensagem animada -->
     <div class="form-success" id="formSuccess">
